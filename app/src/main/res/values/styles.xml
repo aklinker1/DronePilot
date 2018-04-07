@@ -1,0 +1,82 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar"/>
+
+    <style name="AppTheme.Introduction" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorPrimary</item>
+
+        <item name="klinker_iconColor">@color/dark_iconColor</item>
+        <item name="klinker_iconColorFocused">@color/dark_iconColorFocused</item>
+        <item name="klinker_textColor">@color/dark_textColor</item>
+        <item name="klinker_textColorSecondary">@color/dark_textColorSecondary</item>
+        <item name="klinker_textColorDisabled">@color/dark_textColorDisabled</item>
+        <item name="klinker_textColorHint">@color/dark_textColorHint</item>
+        <item name="klinker_textColorFull">@color/white</item>
+        <item name="klinker_backgroundColor">@color/dark_backgroundColor</item>
+        <item name="klinker_cardBackgroundColor">@color/dark_cardBackgroundColor</item>
+        <item name="klinker_dividerColor">@color/dark_dividerColor</item>
+        <item name="klinker_dividerTopColor">@color/dark_dividerTopColor</item>
+        <item name="klinker_dividerBottomColor">@color/dark_dividerBottomColor</item>
+    </style>
+
+    <style name="View.White" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/md_grey_200</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="klinker_iconColor">@color/dark_textColorDisabled</item>
+        <item name="android:textColorSecondary">@color/light_textColorDisabled</item>
+    </style>
+
+    <style name="View.White.DarkHighlight">
+        <item name="colorControlHighlight">@color/light_dividerColor</item>
+    </style>
+
+    <style name="View.PrimaryAccent" parent="AppTheme">
+        <item name="colorAccent">?colorPrimary</item>
+    </style>
+
+    <style name="View.Button.Borderless" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="View.AppBar" parent="ThemeOverlay.AppCompat">
+        <item name="android:tint">@color/light_textColor</item>
+        <item name="android:tintMode">multiply</item>
+    </style>
+
+    <style name="View.Popup" parent="ThemeOverlay.AppCompat">
+        <item name="android:textColorSecondary">@color/light_iconColorMenu</item>
+        <item name="android:colorBackground">?klinker_cardBackgroundColor</item>
+        <item name="android:tint">?klinker_iconColorMenu</item>
+        <item name="android:tintMode">src_atop</item>
+    </style>
+
+    <style name="View.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ac_overflow</item>
+    </style>
+
+    <style name="AppTheme.DialogActivity" parent="Theme.AppCompat.DayNight.Dialog"/>
+
+    <style name="AppTheme.Logger">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+
+    <style name="AppTheme.JoyStick">
+        <item name="joyStickColor">@color/white</item>
+        <item name="backColor">#48000000</item>
+    </style>
+
+</resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:background="?colorPrimary"
+    android:paddingLeft="@dimen/sideMargin"
+    android:paddingTop="16dp"
+    android:paddingRight="@dimen/sideMargin"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:theme="@style/AppTheme.Logger"
+            android:id="@+id/strafe_x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Strife X:" />
+
+        <TextView
+            android:theme="@style/AppTheme.Logger"
+            android:id="@+id/strafe_y"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Strife Y:" />
+
+        <TextView
+            android:theme="@style/AppTheme.Logger"
+            android:id="@+id/angle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Angle:" />
+
+        <TextView
+            android:theme="@style/AppTheme.Logger"
+            android:id="@+id/lift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lift:" />
+    </LinearLayout>
+
+    <Switch
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_gravity="right|top"
+        android:id="@+id/limiter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Limit"
+        android:switchPadding="16dp" />
+
+    <com.klinker.android.drone_pilot.JoyStickView
+        android:layout_gravity="bottom|left"
+        android:id="@+id/strife_joystick"
+        android:layout_width="@dimen/joyStickSize"
+        android:layout_height="@dimen/joyStickSize"
+        style="@style/AppTheme.JoyStick" />
+
+    <com.klinker.android.drone_pilot.JoyStickView
+        android:layout_gravity="bottom|right"
+        android:id="@+id/alt_angle_joystick"
+        android:layout_width="@dimen/joyStickSize"
+        android:layout_height="@dimen/joyStickSize"
+        app:type="altitude"
+        style="@style/AppTheme.JoyStick" />
+
+</FrameLayout>

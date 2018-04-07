@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!-- All Theme Attributes -->
+    <attr name="colorPrimaryHighlight" format="color"/>
+    <attr name="colorAccentHighlight" format="color"/>
+    <attr name="textSize" format="dimension"/>
+
+    <!-- Individual Theme Attributes -->
+    <attr name="colorAccentDark" format="color"/>
+    <attr name="klinker_iconColor" format="color"/>
+    <attr name="klinker_iconColorFocused" format="color"/>
+    <attr name="klinker_iconColorMenu" format="color"/>
+    <attr name="klinker_textColor" format="color"/>
+    <attr name="klinker_textColorSecondary" format="color"/>
+    <attr name="klinker_textColorDisabled" format="color"/>
+    <attr name="klinker_textColorHint" format="color"/>
+    <attr name="klinker_textColorFull" format="color"/>
+    <attr name="klinker_backgroundColor" format="color"/>
+    <attr name="klinker_cardBackgroundColor" format="color"/>
+    <attr name="klinker_dividerColor" format="color"/>
+    <attr name="klinker_dividerTopColor" format="color"/>
+    <attr name="klinker_dividerBottomColor" format="color"/>
+
+    <!-- All Theme Values -->
+    <dimen name="textSize">16sp</dimen>
+
+    <!-- Light Theme Values -->
+    <color name="light_iconColor">#61000000</color>
+    <color name="light_iconColorFocused">#8A000000</color>
+    <color name="light_iconColorMenu">#61000000</color>
+    <color name="light_textColor">#DE000000</color>
+    <color name="light_textColorSecondary">#8A000000</color>
+    <color name="light_textColorDisabled">#61000000</color>
+    <color name="light_textColorHint">#61000000</color>
+    <color name="light_backgroundColor">@color/md_grey_100</color>
+    <color name="light_cardBackgroundColor">@color/white</color>
+    <color name="light_dividerColor">#1F000000</color>
+    <color name="light_dividerTopColor">#1F000000</color>
+    <color name="light_dividerBottomColor">#FFFFFF</color>
+
+    <!-- Dark Theme Values -->
+    <color name="dark_iconColor">#80FFFFFF</color>
+    <color name="dark_iconColorFocused">#FFFFFFFF</color>
+    <color name="dark_iconColorMenu">#80FFFFFF</color>
+    <color name="dark_textColor">#FFFFFFFF</color>
+    <color name="dark_textColorSecondary">#B2FFFFFF</color>
+    <color name="dark_textColorDisabled">#80FFFFFF</color>
+    <color name="dark_textColorHint">#80FFFFFF</color>
+    <color name="dark_backgroundColor">#FF303030</color>
+    <color name="dark_cardBackgroundColor">@color/md_grey_800</color>
+    <color name="dark_dividerColor">#1FFFFFFF</color>
+    <color name="dark_dividerTopColor">#80000000</color>
+    <color name="dark_dividerBottomColor">#1FFFFFFF</color>
+
+    <!-- Opacity Values
+    -   Light Theme:
+    -   87% -> 0xDE -> Primary text
+    -   54% -> 0x8A -> Secondary text, active icons
+    -   38% -> 0x61 -> Disabled text, hint text, and inactive icons
+    -   12% -> 0x1F -> Dividers
+    -
+    -   Dark
+    -   100% -> 0xFF -> Primary text, active icons
+    -   70% -> 0xB2 -> Secondary text
+    -   50% -> 0x80 -> Disabled text, hint text, and inactive icons
+    -   12% -> 0x1F -> Dividers
+    -->
+
+
+
+
+
+    <!-- View attributes -->
+    <declare-styleable name="RatioFrameLayout">
+        <attr name="aspectRatioX" format="integer"/>
+        <attr name="aspectRatioY" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="WeightedTextView">
+        <attr name="font_weight" format="enum">
+            <enum name="thin" value="0"/>
+            <enum name="light" value="1"/>
+            <enum name="regular" value="2"/>
+            <enum name="medium" value="3"/>
+            <enum name="bold" value="4"/>
+            <enum name="black" value="5"/>
+        </attr>
+        <attr name="fontName" format="string"/>
+        <attr name="italicize" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="EnabledViewPager">
+        <attr name="pagingEnabled" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="AutoFitRecyclerView">
+        <attr name="edgeGlowColor" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="JoyStickView">
+        <attr name="joyStickColor" format="color"/>
+        <attr name="backColor" format="color"/>
+        <attr name="type" format="enum">
+            <enum name="strafe" value="11"/>
+            <enum name="altitude" value="22"/>
+        </attr>
+    </declare-styleable>
+
+</resources>

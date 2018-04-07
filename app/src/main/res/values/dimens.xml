@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardCornerRadius">2dp</dimen>
+    <dimen name="sideMargin">32dp</dimen>
+    <dimen name="joyStickSize">150dp</dimen>
+</resources>
