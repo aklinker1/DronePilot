@@ -31,7 +31,7 @@ public class JoyStickView extends View implements GestureDetector.OnGestureListe
     private int joystickColor;
 
     //Button Size percentage of the minimum(width, height)
-    private int percentage = 25;
+    private int percentage = 20;
 
     public interface JoyStickListener {
         void onMove(JoyStickView joyStick, double x, double y);
@@ -65,8 +65,6 @@ public class JoyStickView extends View implements GestureDetector.OnGestureListe
                 backColor = typedArray.getColor(R.styleable.JoyStickView_backColor, Color.WHITE);
                 joystickColor = typedArray.getColor(R.styleable.JoyStickView_joyStickColor, Color.RED);
                 type = typedArray.getInt(R.styleable.JoyStickView_type, TYPE_STRAFE);
-                if (percentage > 50) percentage = 50;
-                if (percentage < 25) percentage = 25;
 
                 typedArray.recycle();
             }
@@ -82,7 +80,7 @@ public class JoyStickView extends View implements GestureDetector.OnGestureListe
         centerY = height / 2;
         float min = Math.min(width, height);
         posX = centerX;
-        posY = centerY;
+        posY = type == TYPE_STRAFE ? centerY : centerY + backRadius;
         joystickRadius = (min / 2f * (percentage / 100f));
         backRadius = (min / 2f * ((100f - percentage) / 100f));
     }
@@ -143,7 +141,11 @@ public class JoyStickView extends View implements GestureDetector.OnGestureListe
         }
 
         if (listener != null) {
-            listener.onMove(this, posX, posY);
+            double xp = (posX - centerX) / backRadius;
+            double yp;
+            if (type == TYPE_STRAFE) yp = (centerY - posY) / backRadius;
+            else yp = (centerY + backRadius - posY) / (2 * backRadius);
+            listener.onMove(this, xp, yp);
         }
         return true;
     }
