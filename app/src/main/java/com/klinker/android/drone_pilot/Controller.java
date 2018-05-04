@@ -21,14 +21,10 @@ import java.util.Map;
 
 public class Controller {
 
-    public final static String HOST = "http://192.168.86.35:8000";
+    public static String HOST = "http://192.168.86.35:8000";
 
-    RequestQueue queue;
-
-    public Controller(RequestQueue queue) {
-        this.queue = queue;
+    public void setIPAddress(String address) {
+        HOST = "http://" + address + ":8000";
     }
-
-
 
 }

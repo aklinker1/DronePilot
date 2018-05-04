@@ -1,13 +1,16 @@
 package com.klinker.android.drone_pilot
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Vibrator
+import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatDelegate
 import android.util.Log
-import android.widget.Switch
-import android.widget.TextView
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.*
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
@@ -22,10 +25,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var anglePreview: TextView
     private lateinit var liftPreview: TextView
     private lateinit var pingPreview: TextView
+    private lateinit var ipAddress: EditText
     private lateinit var limiter: Switch
     private lateinit var vibrator: Vibrator
     private var isRunning: Boolean = false
-    private lateinit var controller: Controller
+    private var controller = Controller()
+    private lateinit var queue: RequestQueue
 
     private var prevs: DoubleArray = doubleArrayOf(0.0, 0.0, 0.0, 0.0)
 
@@ -35,9 +40,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-        findViewById<JoyStickView>(R.id.strafe_joystick).setListener(strafeListener)
-        findViewById<JoyStickView>(R.id.alt_angle_joystick).setListener(altListener)
-
         strafeStick = findViewById(R.id.strafe_joystick)
         liftStick = findViewById(R.id.alt_angle_joystick)
         strafeXPreview = findViewById(R.id.strafe_x)
@@ -46,20 +48,32 @@ class MainActivity : AppCompatActivity() {
         liftPreview = findViewById(R.id.lift)
         pingPreview = findViewById(R.id.ping)
         limiter = findViewById(R.id.limiter)
+        ipAddress = findViewById(R.id.ip_address)
 
+        findViewById<JoyStickView>(R.id.strafe_joystick).setListener(strafeListener)
+        findViewById<JoyStickView>(R.id.alt_angle_joystick).setListener(altListener)
+        ipAddress.setOnEditorActionListener(ipListener)
+        findViewById<CheckBox>(R.id.armed).setOnCheckedChangeListener(armListener)
+        findViewById<CheckBox>(R.id.hover).setOnCheckedChangeListener(hoverListener)
+        findViewById<CheckBox>(R.id.drop).setOnCheckedChangeListener(dropListener)
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val ip = prefs.getString("ip-address", "192.168.86.35")
+        ipAddress.setHint(ip)
+        controller.setIPAddress(ip)
     }
 
     override fun onResume() {
         super.onResume()
-        val queue = Volley.newRequestQueue(this)
+        queue = Volley.newRequestQueue(this)
         isRunning = true
 
         Thread {
             while (isRunning) {
-                Utils.sleep(1000);
+                Utils.sleep(1000)
                 val request = PingRequest(
                         Response.Listener { response -> updatePing(response) },
-                        Response.ErrorListener { error -> error.printStackTrace();pingPreview.text = "No Ping" })
+                        Response.ErrorListener { error -> pingPreview.text = "No Ping" })
                 queue.add(request)
             }
         }.start()
@@ -80,12 +94,18 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         isRunning = false
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        prefs.edit().putString(
+                "ip-address",
+                ipAddress.hint.toString()
+        ).apply()
     }
 
     private val strafeListener = object : JoyStickView.JoyStickListener {
         override fun onMove(joyStick: JoyStickView?, x: Double, y: Double) {
             var m = 1.0
-            if (limiter.isChecked) m = 0.5
+            if (limiter.isChecked) m = 0.25
             val xDif = x*m - prevs[0]
             val yDif = y*m - prevs[1]
             prevs[0] = x*m
@@ -109,7 +129,7 @@ class MainActivity : AppCompatActivity() {
             var ml = 1.0
             var ma = 1.0
             if (limiter.isChecked) {
-                ml = 0.75
+                ml = 1.0
                 ma = 0.5
             }
             val xDif = x*ma - prevs[2]
@@ -130,6 +150,33 @@ class MainActivity : AppCompatActivity() {
         override fun onDoubleTap() {}
     }
 
+    private val armListener = CompoundButton.OnCheckedChangeListener { view, checked ->
+        val request = ArmRequest(
+                checked,
+                Response.Listener { response -> println(response) },
+                Response.ErrorListener { error -> println(error) }
+        )
+        queue.add(request)
+    }
+
+    private val hoverListener = CompoundButton.OnCheckedChangeListener { view, checked ->
+        val request = HoverRequest(
+                checked,
+                Response.Listener { response -> println(response) },
+                Response.ErrorListener { error -> println(error) }
+        )
+        queue.add(request)
+    }
+
+    private val dropListener = CompoundButton.OnCheckedChangeListener { view, checked ->
+        val request = DropRequest(
+                checked,
+                Response.Listener { response -> println(response) },
+                Response.ErrorListener { error -> println(error) }
+        )
+        queue.add(request)
+    }
+
     fun map(x: Double, inLow: Double, inHigh: Double, outLow: Double, outHigh: Double): Double {
         return (x - inLow) * (outHigh - outLow) / (inHigh - inLow) + outLow
     }
@@ -140,6 +187,18 @@ class MainActivity : AppCompatActivity() {
             pingPreview.text = "${System.currentTimeMillis() - o.getLong("calledAt")} ms"
         } else {
             pingPreview.text = "No Ping"
+        }
+    }
+
+    private val ipListener = object : TextView.OnEditorActionListener {
+        override fun onEditorAction(textView: TextView?, action: Int, event: KeyEvent?): Boolean {
+            if (action == EditorInfo.IME_ACTION_GO && textView != null) {
+                controller.setIPAddress(textView.text.toString())
+                textView.hint = textView.text.toString()
+                textView.text = ""
+                return true
+            }
+            return false
         }
     }
 
